@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>EventAI — Smart AI Event Planning Platform</title>
+    <meta name="description" content="Plan Smarter. Spend Better. Celebrate Happier. EventAI dashboard." />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="css/styles.css" />
+    <script defer src="js/api.js"></script>
+    <script defer src="js/app.js"></script>
+  </head>
+  <body>
+    <div class="app">
+      <aside class="sidebar" id="sidebar">
+        <div class="brand">
+          <img src="assets/logo.svg" alt="EventAI logo" class="logo" />
+          <div class="brand-text">
+            <h1>EventAI</h1>
+            <p>Plan Smarter.</p>
+          </div>
+        </div>
+        <nav class="nav">
+          <a class="nav-item active" href="#"><i class="fa-solid fa-chart-line"></i><span>Dashboard</span></a>
+          <a class="nav-item" href="#"><i class="fa-solid fa-calendar-days"></i><span>Events</span></a>
+          <a class="nav-item" href="#"><i class="fa-solid fa-users"></i><span>Guests</span></a>
+          <a class="nav-item" href="#"><i class="fa-solid fa-handshake-simple"></i><span>Vendors</span></a>
+          <a class="nav-item" href="#"><i class="fa-solid fa-wallet"></i><span>Budget</span></a>
+          <a class="nav-item" href="#"><i class="fa-solid fa-robot"></i><span>AI Suggestions</span></a>
+          <a class="nav-item" href="#"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
+        </nav>
+        <div class="sidebar-footer">
+          <button id="createEventBtn" class="btn btn-gradient"><i class="fa-solid fa-plus"></i> Create Event</button>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div class="left">
+            <button id="sidebarToggle" class="icon-btn"><i class="fa-solid fa-bars"></i></button>
+            <h2 class="page-title">Dashboard</h2>
+          </div>
+          <div class="right">
+            <div class="search">
+              <input id="searchInput" placeholder="Search events, vendors, guests..." />
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+            <button class="icon-btn" title="Notifications"><i class="fa-regular fa-bell"></i></button>
+            <div class="profile-area">
+              <button id="signInBtn" class="btn btn-secondary">Sign In</button>
+              <button id="signOutBtn" class="btn btn-secondary" style="display:none">Sign Out</button>
+              <div class="profile" id="profile" style="display:none">
+                <img src="https://i.pravatar.cc/40" alt="User avatar" />
+                <span id="profileName">Alex</span>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <section class="content">
+          <div class="grid">
+            <div class="stats">
+              <div class="stat-card">
+                <div class="stat-left">
+                  <h3>12</h3>
+                  <p>Active Events</p>
+                </div>
+                <div class="stat-icon"><i class="fa-solid fa-calendar-plus"></i></div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-left">
+                  <h3>$24,200</h3>
+                  <p>Total Budget</p>
+                </div>
+                <div class="stat-icon"><i class="fa-solid fa-wallet"></i></div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-left">
+                  <h3>1,450</h3>
+                  <p>Guests Planned</p>
+                </div>
+                <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-left">
+                  <h3>86</h3>
+                  <p>Vendors</p>
+                </div>
+                <div class="stat-icon"><i class="fa-solid fa-truck-fast"></i></div>
+              </div>
+            </div>
+
+            <div class="main-row">
+              <div class="card events-card">
+                <div class="card-header">
+                  <h3>Upcoming Events</h3>
+                  <div class="card-actions">
+                    <button class="link">View all</button>
+                  </div>
+                </div>
+                <ul class="events-list" id="eventsList">
+                  <!-- events injected by JS -->
+                </ul>
+              </div>
+
+              <div class="card ai-card">
+                <div class="card-header">
+                  <h3>AI Planning Suggestions</h3>
+                </div>
+                <div class="ai-suggestions" id="aiSuggestions">
+                  <!-- suggestions injected by JS -->
+                </div>
+              </div>
+            </div>
+
+            <div class="bottom-row">
+              <div class="card vendors-card">
+                <div class="card-header">
+                  <h3>Top Vendors</h3>
+                </div>
+                <div class="vendors" id="vendorsList">
+                  <!-- vendors injected by JS -->
+                </div>
+              </div>
+
+              <div class="card budget-card">
+                <div class="card-header">
+                  <h3>Budget Breakdown</h3>
+                </div>
+                <div class="budget-bars" id="budgetBars">
+                  <!-- budget bars injected by JS -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Create Event Modal -->
+    <div class="modal" id="createEventModal" aria-hidden="true">
+      <div class="modal-dialog">
+        <header>
+          <h3>Create Event</h3>
+          <button class="icon-btn modal-close" id="closeModal"><i class="fa-solid fa-xmark"></i></button>
+        </header>
+        <form id="createEventForm">
+          <div class="form-row">
+            <label>Event Name</label>
+            <input required name="name" />
+          </div>
+          <div class="form-row">
+            <label>Date</label>
+            <input type="date" required name="date" />
+          </div>
+          <div class="form-row">
+            <label>Estimated Budget</label>
+            <input type="number" min="0" name="budget" />
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn btn-secondary modal-close">Cancel</button>
+            <button type="submit" class="btn btn-gradient">Create Event</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal" aria-hidden="true">
+      <div class="modal-dialog">
+        <header>
+          <h3>Sign In</h3>
+          <button class="icon-btn modal-close" id="closeLogin"><i class="fa-solid fa-xmark"></i></button>
+        </header>
+        <form id="loginForm">
+          <div class="form-row">
+            <label>Email</label>
+            <input required name="email" type="email" />
+          </div>
+          <div class="form-row">
+            <label>Password</label>
+            <input required name="password" type="password" />
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn btn-secondary modal-close">Cancel</button>
+            <button type="submit" class="btn btn-gradient">Sign In</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Toast notifications -->
+    <div id="toastContainer" aria-live="polite" aria-atomic="true"></div>
+
+  </body>
+</html>

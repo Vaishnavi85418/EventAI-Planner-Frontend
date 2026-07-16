@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1">
+      <stop offset="0" stop-color="#6C63FF"/>
+      <stop offset="1" stop-color="#00C2FF"/>
+    </linearGradient>
+  </defs>
+  <rect width="120" height="120" rx="20" fill="#fff" />
+  <g transform="translate(18,18)">
+    <circle cx="24" cy="24" r="24" fill="url(#g)" />
+    <path d="M12 36 L36 36 L36 12" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </g>
+  <text x="68" y="92" font-family="Inter,Arial" font-size="10" fill="#4F46E5">EventAI</text>
+</svg>
